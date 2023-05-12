@@ -19,11 +19,16 @@ class EnBu:
     def __init__(self) -> None:
         self.enSql=EnSql('localhost','root','sxh.200008','manager')
     # 列出需要导入的文件名称
-    def list_excel_fileNames(self,excelPath):
+    def list_excel_fileNames(self,excelPath)->list:
         fileNamesList=[]
         for root,dirs,fileNames in os.walk(excelPath):
+            count=1
             for fileName in fileNames:
-                print("===== %s =====\n"%fileName)
+                print("=====%s. %s =====\n"%(count,fileName))
+                count+=1
+                fileNamesList.append(fileName)
+            return fileNamesList
+    
     # 导入excel方法
     def import_excel(self,excelPath,skiprows=1):
         print("""
@@ -34,8 +39,9 @@ class EnBu:
         importExcelType=int(input("请输入数字: "))
         if  importExcelType==1:
             # 列出excel文件名称
-            self.list_excel_fileNames(excelPath=excelPath)
-            importExcelName=input("请输入excel文件名称: ")
+            fileNameList=self.list_excel_fileNames(excelPath=excelPath)
+            indexNumber=int(input("请输入文件标号: "))
+            importExcelName=fileNameList[indexNumber]
             df = pd.read_excel(excelPath+"/"+importExcelName, skiprows=skiprows)
             print(df)
             # row 取数据
