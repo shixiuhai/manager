@@ -1,6 +1,8 @@
 import pymysql
 import pandas as pd
 import datetime
+import sys
+sys.path.append("..")
 class EnSql:
     def __init__(self,mysqlHost,mysqlUser,mysqlPassword,mysqlDatabase) -> None:
         # 创建一个数据库对象
