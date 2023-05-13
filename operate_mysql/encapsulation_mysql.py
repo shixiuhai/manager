@@ -17,7 +17,8 @@ class EnSql:
         try:
             cursor.execute(sql)
             self.db.commit()
-        except:
+        except Exception as error:
+            print(error)
             # 发生错误时回滚
             self.db.rollback()
         cursor.close()    
@@ -27,7 +28,8 @@ class EnSql:
         try:
             cursor.execute(sql)
             self.db.commit()
-        except:
+        except Exception as e:
+            print(e)
             # 发生错误时回滚
             self.db.rollback()
         cursor.close()

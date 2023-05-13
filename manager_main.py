@@ -11,10 +11,27 @@ class MG:
         print("----------------------------------start----------------------------------")
     def print_end(self):
         print("----------------------------------end----------------------------------")
-        
+    
+    def main(self):
+        while True:
+            print("""
+                    1. 导入sql
+                    2. 分析成绩
+                """)
+            a=int(input("请输入你要做的事情: "))
+            if a==1:
+                self.enBu.import_excel("excel_files")
+            elif a==2:
+                self.enBu.analyzing_student_grades()
+
 
 if __name__ == "__main__":
-    enBu=EnBu()
-    enBu.import_excel("excel_files")
+    mg=MG()
+    mg.main()
+    # enBu=EnBu()
+    # enBu.import_excel(excelPath="excel_files")
+    # enBu.select_user_information()
+    # enBu.analyzing_student_grades()
+  
         
         
