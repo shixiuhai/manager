@@ -24,11 +24,11 @@ class MG:
             elif a==2:
                 self.enBu.analyzing_student_grades()
 
-
 if __name__ == "__main__":
-    mg=MG()
-    mg.main()
-    # enBu=EnBu()
+    # mg=MG()
+    # mg.main()
+    enBu=EnBu()
+    enBu.process_print_information([('张三','89','64','87','87','69','15'),('李四','92','64','87','87','69','24')],['name','chinese','englist','math','physics',"biological","物理"])
     # enBu.import_excel(excelPath="excel_files")
     # enBu.select_user_information()
     # enBu.analyzing_student_grades()

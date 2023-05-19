@@ -5,6 +5,8 @@ import os
 import sys
 sys.path.append("..")
 from  operate_mysql.encapsulation_mysql import EnSql
+
+
 class Subject(Enum):
     chinese = 1
     math = 2
@@ -31,7 +33,7 @@ class EnBu:
                 fileNamesList.append(fileName)
             return fileNamesList
     
-    # 
+    # pass 
     def import_excel(self,excelPath,skiprows=0):
         print("""
                 ===============请选择你要导入的excel文件===============
@@ -45,7 +47,7 @@ class EnBu:
             indexNumber=int(input("请输入文件标号: "))
             importExcelName=fileNameList[indexNumber-1]
             df = pd.read_excel(excelPath+"/"+importExcelName, skiprows=skiprows)
-            print(df)
+            # print(df)
             # row 取数据
             # 按照行遍历
             for index, row in df.iterrows():   
@@ -115,7 +117,6 @@ class EnBu:
             inputCourseIndexList=input("请输入你需要分析的学科维度按照,号分割: ").split(",")
             courseNames=""
             for indexStr in inputCourseIndexList:
-                print(indexStr)
                 courseNames=courseNames+courseList[int(indexStr)-1]+"+"
             sql="SELECT name, AVG(%s) from m_students where created_time BETWEEN '%s' and '%s' GROUP BY name"%(courseNames[:-1:],startTime,endTime)
             results=self.enSql.select_sql(sql)
@@ -123,16 +124,94 @@ class EnBu:
             print(results)
         if analyzingType==2:
             pass
+    
     # 维度班级维度或者个人维度
     # 排名（设置排名维度，按照总分排名，按照单科成绩排名）
     def student_grades_ranking(self):
         pass
+    
     # 增加某个学生或者老师的信息 完整字段插入
     def insert_user_information(self):
         pass
-    # 处理查询出的用户信息，希望他按照表格展示
-    def process_print_information(self,results,titles):
-        pass
+    
+    def process_dynamic_variabl(self,t:tuple):
+        formatIndex = "|"
+        if len(t)==1:
+            for index in range(1):
+                formatIndex=formatIndex+"{%s:^10}\t|"%index
+            return formatIndex.format(t[0])
+        
+        if len(t)==2:
+            for index in range(2):
+                formatIndex=formatIndex+"{%s:^10}\t|"%index
+            return formatIndex.format(t[0],t[1])
+        
+        if len(t)==3:
+            for index in range(3):
+                formatIndex=formatIndex+"{%s:^10}\t|"%index
+            return formatIndex.format(t[0],t[1],t[2])
+        
+        if len(t)==4:
+            for index in range(4):
+                formatIndex=formatIndex+"{%s:^10}\t|"%index
+            return formatIndex.format(t[0],t[1],t[2],t[3])
+            
+        if len(t)==5:
+            for index in range(5):
+                formatIndex=formatIndex+"{%s:^10}\t|"%index
+            return formatIndex.format(t[0],t[1],t[2],t[3],t[4])
+           
+        if len(t)==6:
+            for index in range(6):
+                formatIndex=formatIndex+"{%s:^10}\t|"%index
+            return formatIndex.format(t[0],t[1],t[2],t[3],t[4],t[5])
+          
+        if len(t)==7:
+            for index in range(7):
+                formatIndex=formatIndex+"{%s:^10}\t|"%index
+            return formatIndex.format(t[0],t[1],t[2],t[3],t[4],t[5],t[6])
+           
+        if len(t)==8:
+            for index in range(8):
+                formatIndex=formatIndex+"{%s:^10}\t|"%index
+            return formatIndex.format(t[0],t[1],t[2],t[3],t[4],t[5],t[6],t[7])
+          
+        if len(t)==9:
+            for index in range(9):
+                formatIndex=formatIndex+"{%s:^10}\t|"%index
+            return formatIndex.format(t[0],t[1],t[2],t[3],t[4],t[5],t[6],t[7],t[8])
+            
+            
+    # 处理查询出的用户信息，希望它按照表格展示
+    def process_print_information(self,results:list,titles:list):
+        length = len(titles)
+        # print("-"*62)
+        # 创建formatIndex
+        
+        # 方案一中英文不对齐pass
+        # formatIndex = "|"
+        # for index in range(length):
+        #     formatIndex=formatIndex+"%-11s|"
+        # print("============"*length)
+        # print(formatIndex%tuple(titles))
+        # for item in results:
+        #     print(formatIndex%(item))
+        # print("============"*length)
+        # 方案二
+        
+        print("================"*length)
+        # 打印标题
+        print(self.process_dynamic_variabl(tuple(titles)))
+        # 进行循环打印内容
+        for item in results:
+            print(self.process_dynamic_variabl(item))
+        
+        print("================"*length)
+       
+        # print(formatIndex.format())
+        # print("{0:^6}\t{1:^10}\t{2:^10}\t".format("你好12314","12","哈哈",chr(12288)))
+        # print("{0:^6}\t{0:^6}\t{0:^6}\t".format("你12好","你的","哈哈",chr(12288)))
+        
     # 查询某个学生或者老师信息 查询完整信息包括id (name,class_name)
     def select_user_information(self):
         print("""
@@ -149,7 +228,7 @@ class EnBu:
             name=input("请输入老师姓名: ")
             className=input("请输入老师的班级: ")
             reuslts=self.enSql.select_sql("select * from ")
-            
+    
     # 修改某个学生或者老师的信息 (id) 需要查询
     def modify_user_information(self):
         pass
